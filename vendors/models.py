@@ -8,14 +8,14 @@ from vms_project.shortcuts import get_random_code
 class BaseModel(models.Model):
     id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         abstract = True
 
 
 class Vendor(BaseModel):
-    name = models.CharField(max_length=255, default="")
+    name = models.CharField(max_length=255)
     contact_details = models.TextField()
     address = models.TextField()
     vendor_code = models.CharField(
