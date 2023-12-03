@@ -2,7 +2,11 @@ __pycache__/
 htmlcov/
 env/
 *.log
-.coverage
 .env
 *.db
 *.json
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
