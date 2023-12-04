@@ -26,7 +26,7 @@ class VendorModelTest(APITestCase):
         )
 
     def test_url(self):
-        response = self.client.get(self.vendor_url)
+        response = self.client.get(self.vendor.get_absolute_url())
         self.assertEqual(
             response.status_code, 200, "Invalid absolute url configuration"
         )
@@ -62,7 +62,8 @@ class VendorModelTest(APITestCase):
         self.assertEqual(Vendor.objects.count(), 1)
 
     def test_retrieve_vendor(self):
-        response = self.client.get(self.vendor_url)
+        detail_url = reverse("vendors:vendor-actions", args=[self.vendor.id])
+        response = self.client.get(detail_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["name"], self.vendor_data["name"])
 
@@ -72,12 +73,14 @@ class VendorModelTest(APITestCase):
             "contact_details": "test contact details of vijay",
             "address": "test address of vijay",
         }
-        response = self.client.put(self.vendor_url, data=update_data, format="json")
+        detail_url = reverse("vendors:vendor-actions", args=[self.vendor.id])
+        response = self.client.put(detail_url, data=update_data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.vendor.refresh_from_db()
         self.assertEqual(self.vendor.name, update_data["name"])
 
     def test_delete_vendor(self):
-        response = self.client.delete(self.vendor_url)
+        detail_url = reverse("vendors:vendor-actions", args=[self.vendor.id])
+        response = self.client.delete(detail_url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(Vendor.objects.count(), 0)
