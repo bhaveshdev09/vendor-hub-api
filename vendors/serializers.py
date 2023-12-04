@@ -14,6 +14,8 @@ class VendorSerializer(serializers.ModelSerializer):
             "quality_rating_avg",
             "average_response_time",
             "fulfillment_rate",
+            "created_at",
+            "updated_at",
         ]
         extra_kwargs = {
             "name": {
