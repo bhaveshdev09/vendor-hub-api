@@ -35,3 +35,21 @@ class Vendor(BaseModel):
 
     def get_absolute_url(self):
         return reverse("vendors:vendor-actions", kwargs={"pk": self.pk})
+
+
+class HistoricalPerformance(models.Model):
+    id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
+    history_date = models.DateTimeField()  # the date field name is changed to histdate
+    on_time_delivery_rate = models.FloatField()
+    quality_rating_avg = models.FloatField()
+    average_response_time = models.FloatField()
+    fulfillment_rate = models.FloatField()
+
+    def __str__(self):
+        return f"{self.vendor.name} - {self.date}"
+
+    class Meta:
+        ordering = ["-history_date"]
+        verbose_name = "Historical Performance"
+        verbose_name_plural = "Historical Performances"
