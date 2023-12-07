@@ -5,5 +5,14 @@ app_name = "orders"
 
 urlpatterns = [
     path("", views.PurchaseOrderListView.as_view(), name="purchase-order-list"),
-    path("<uuid:pk>/", views.PurchaseOrderActionView.as_view(), name="purchase-order-actions"),
+    path(
+        "<uuid:pk>/",
+        views.PurchaseOrderActionView.as_view(),
+        name="purchase-order-actions",
+    ),
+    path(
+        "<uuid:pk>/acknowledge",
+        views.PurchaseOrderAcknowledgeView.as_view(),
+        name="purchase-order-acknowledge",
+    ),
 ]

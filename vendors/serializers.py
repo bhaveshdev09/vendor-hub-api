@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.utils.translation import gettext as _
-from vendors.models import Vendor
+from vendors.models import Vendor, HistoricalPerformance
 
 
 class VendorSerializer(serializers.ModelSerializer):
@@ -10,10 +10,6 @@ class VendorSerializer(serializers.ModelSerializer):
         read_only_fields = [
             "id",
             "vendor_code",
-            "on_time_delivery_rate",
-            "quality_rating_avg",
-            "average_response_time",
-            "fulfillment_rate",
             "created_at",
             "updated_at",
         ]
@@ -30,3 +26,20 @@ class VendorSerializer(serializers.ModelSerializer):
                 "error_messages": {"required": _("please provide vendor address")}
             },
         }
+
+
+class VendorPerformanceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Vendor
+        fields = [
+            "on_time_delivery_rate",
+            "quality_rating_avg",
+            "average_response_time",
+            "fulfillment_rate",
+        ]
+
+
+class HistoricalPerformanceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = HistoricalPerformance
+        fields = "__all__"
