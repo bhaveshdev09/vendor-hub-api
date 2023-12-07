@@ -101,12 +101,15 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": env("PAGE_SIZE"),
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ),
 }
 
 SPECTACULAR_SETTINGS = {
     "TITLE": env("SWAGGER_DOC_TITLE"),
-    "DESCRIPTION": "An all-inclusive set of APIs for effective management of vendor profiles, tracking purchase orders, and calculating vendor performance metrics in a Vendor Management System (VMS).",
+    "DESCRIPTION": "APIs for effective management of vendor profiles, purchase orders & generating vendor performance matrix",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
-    # OTHER SETTINGS
+    "SCHEMA_PATH_PREFIX_INSERT": "api/",
 }
