@@ -40,16 +40,16 @@ class Vendor(BaseModel):
 
     def get_purchase_orders_by_status(
         self, status=Union[OrderStatus, str] | None
-    ) -> models.QuerySet:
+    ) -> models.QuerySet | None:
         "filter the purchase orders with the"
         if status is None:
             return self.purchase_orders.all()
-        elif status in OrderStatus:
+        elif OrderStatus.is_valid_status(status=status):
             return self.purchase_orders.filter(status=status)
         else:
             return None
 
-    def calc_on_time_delivery_rate(self):
+    def calc_on_time_delivery_rate(self) -> float:
         """
         The function calculates the on-time delivery rate by dividing the count of purchase orders by
         the count of purchase orders with acknowledgment dates before or on the delivery dates
@@ -111,14 +111,14 @@ class HistoricalPerformance(models.Model):
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
     history_date = models.DateTimeField(
         auto_now_add=True
-    )  # the date field name is changed to histdate
+    )  # the date field name is changed to history_date
     on_time_delivery_rate = models.FloatField()
     quality_rating_avg = models.FloatField()
     average_response_time = models.FloatField()
     fulfillment_rate = models.FloatField()
 
     def __str__(self):
-        return f"{self.vendor.name} - {self.date}"
+        return f"{self.vendor.name} - {self.history_date}"
 
     class Meta:
         ordering = ["-history_date"]

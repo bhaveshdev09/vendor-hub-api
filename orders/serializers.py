@@ -32,15 +32,15 @@ class PurchaseOrderSerializer(serializers.ModelSerializer):
         }
 
     def validate(self, attrs):
+        # if instance.status == validated_data.get("status") == OrderStatus.COMPLETED:
+        #     raise ValidationError(
+        #         _("Purchase order status already marked as completed")
+        #     )
         return super().validate(attrs)
 
     def update(self, instance, validated_data):
-        status = validated_data.get("status")
-        if instance.status == status == OrderStatus.COMPLETED:
-            raise ValidationError(
-                _("Purchase order status already marked as completed")
-            )
-        instance.status = status
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
         instance.save()
         if instance.status == OrderStatus.COMPLETED:
             signals.purchase_order_status_completed.send(
@@ -53,12 +53,16 @@ class PurchaseOrderAcknowledgeSerializer(serializers.ModelSerializer):
     class Meta:
         model = PurchaseOrder
         fields = ["acknowledgment_date"]
+        extra_kwargs = {"acknowledgment_date": {"required": True}}
+
+    def validate_acknowledgment_date(self, value):
+        if not value:
+            value = timezone.now()
+        return value
 
     def update(self, instance, validated_data):
-        acknowledgment_date = validated_data.get("acknowledgment_date")
-        if not acknowledgment_date:
-            acknowledgment_date = timezone.now()
-        instance.acknowledgment_date = acknowledgment_date
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
         instance.save()
         signals.purchase_order_acknowledged.send(
             sender=instance.__class__, instance=instance
