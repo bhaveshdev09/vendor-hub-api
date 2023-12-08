@@ -9,22 +9,24 @@ from rest_framework.permissions import IsAuthenticated
 
 
 class VendorListView(generics.ListCreateAPIView):
-    authentication_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
     queryset = Vendor.objects.all()
     serializer_class = VendorSerializer
 
 
 class VendorActionView(generics.RetrieveUpdateDestroyAPIView):
-    authentication_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
     queryset = Vendor.objects.all()
     serializer_class = VendorSerializer
 
 
 class VendorPerformanceView(generics.RetrieveAPIView):
+    permission_classes = (IsAuthenticated,)
     queryset = Vendor.objects.all()
     serializer_class = VendorPerformanceSerializer
 
 
 class VendorPerformanceHistoryView(generics.ListAPIView):
+    permission_classes = (IsAuthenticated,)
     queryset = HistoricalPerformance.objects.all()
     serializer_class = HistoricalPerformanceSerializer
