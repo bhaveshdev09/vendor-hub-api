@@ -111,5 +111,5 @@ SPECTACULAR_SETTINGS = {
     "DESCRIPTION": "APIs for effective management of vendor profiles, purchase orders & generating vendor performance matrix",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
-    "SCHEMA_PATH_PREFIX_INSERT": "api/",
+    "SCHEMA_PATH_PREFIX_INSERT": "api",
 }
