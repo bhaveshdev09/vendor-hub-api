@@ -12,7 +12,7 @@ urlpatterns = [
         name="vendor-performance",
     ),
     path(
-        "<uuid:pk>/performance-history",
+        "<uuid:pk>/performance/history",
         views.VendorPerformanceHistoryView.as_view(),
         name="vendor-performance-history",
     ),
