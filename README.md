@@ -38,8 +38,8 @@ To access the project plan, please visit the following URL: [Vendor Hub API](htt
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/vendor-management-system.git
-   cd vendor-management-system
+   git clone https://github.com/bhaveshdev09/vendor-hub-api.git backend
+   cd backend
    ```
 2. Create a virtual environment and install dependencies:
 
@@ -58,7 +58,11 @@ To access the project plan, please visit the following URL: [Vendor Hub API](htt
    ```bash
    python manage.py runserver
    ```
-5. Access the application at http://localhost:8000.
+5. Set the environment variables
+   
+   > Please refer **.env.example** for must have variables
+
+6. Access the application at http://localhost:8000.
 
 ## API Endpoints
 
